@@ -26,7 +26,7 @@ public class ProvedorConexao {
 	
 		String driver = "com.mysql.cj.jdbc.Driver";
         String user = "root";
-        String senha = "senha";
+        String senha = "root"; // ACESSO CLIMAT ROOT PASSWORD != ACESSO SALA SENHA SENHA
 		String url = "jdbc:mysql://localhost:3306/campeonato?useTimezone=true&serverTimezone=UTC";
 		
 			

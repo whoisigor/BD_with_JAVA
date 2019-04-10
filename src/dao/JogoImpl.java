@@ -25,7 +25,7 @@ public class JogoImpl implements JogoDAO {
 				preparedStatement = conn.prepareStatement(selectTableSQL);
 				ResultSet rs = preparedStatement.executeQuery();
 				while (rs.next()) { // ENQUANTO EXISTIR O PROXIMO
-		             // Criação do objeto Jogo
+		             // Criando objeto
 		             Jogo jogo = new Jogo();
 		             jogo.setCod(rs.getInt("cod"));
 		             jogo.setTimea_cod(rs.getInt("timea_cod"));
@@ -39,7 +39,6 @@ public class JogoImpl implements JogoDAO {
 		         return jogos;
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -60,9 +59,9 @@ public class JogoImpl implements JogoDAO {
 			String insertTableSQL = "INSERT INTO jogo VALUES (?,?,?,?)";
 				preparedStatement = conn.prepareStatement(insertTableSQL);
 				preparedStatement.setInt(1, jogo.getCod());
-				preparedStatement.setString(2, jogo.getResultado());
-				preparedStatement.setInt(3, jogo.getTimea_cod());
-				preparedStatement.setInt(4, jogo.getTimeb_cod());
+				preparedStatement.setInt(2, jogo.getTimea_cod());
+				preparedStatement.setInt(3, jogo.getTimeb_cod());
+				preparedStatement.setString(4, jogo.getResultado());
 				int resultado = preparedStatement.executeUpdate();
 			
 		} catch (SQLException e) {

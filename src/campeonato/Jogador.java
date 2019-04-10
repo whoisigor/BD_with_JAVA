@@ -47,6 +47,10 @@ public class Jogador {
 		this.idade = idade;
 	}
 	
+	public String toString() {
+		return "|      " + getCod() + "      |     " + getTime_cod() + "    |    " + getIdade() + "    |    " + getNome(); 
+	}
+	
 	
 
 }

@@ -5,6 +5,9 @@ public class Time {
 	private String nome;
 	private String datafundacao;
 	
+	
+	public Time() { }
+	
 	public Time(int cod, String nome, String datafundacao) {
 		super();
 		this.cod = cod;
@@ -29,6 +32,10 @@ public class Time {
 	}
 	public void setDatafundacao(String datafundacao) {
 		this.datafundacao = datafundacao;
+	}
+	
+	public String toString() {
+		return "|     " + getCod() + "    |   "+ getDatafundacao() + " |  " + getNome();
 	}
 	
 	
