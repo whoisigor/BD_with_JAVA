@@ -25,7 +25,7 @@ public class JogadorImpl implements JogadorDAO {
 				preparedStatement = conn.prepareStatement(selectTableSQL);
 				ResultSet rs = preparedStatement.executeQuery();
 				while (rs.next()) { // ENQUANTO EXISTIR O PROXIMO
-		             // Criação do objeto Jogador
+		             // Criando objeto
 		             Jogador jogador = new Jogador();
 		             jogador.setCod(rs.getInt("cod"));
 		             jogador.setTime_cod(rs.getInt("time_cod"));
@@ -46,7 +46,26 @@ public class JogadorImpl implements JogadorDAO {
 
 	@Override
 	public Jogador verJogadorPorCodigo(int codigo) {
-		// TODO Auto-generated method stub
+		PreparedStatement preparedStatement;
+		Statement stm;
+		Connection conn;
+		try {
+			conn = ProvedorConexao.getConnection();
+			String selectTableSQL = "SELECT * FROM jogador WHERE cod=" + codigo;
+				preparedStatement = conn.prepareStatement(selectTableSQL);
+				ResultSet rs = preparedStatement.executeQuery();
+				if(rs != null && rs.next()) {
+					Jogador jogador = new Jogador(rs.getInt("cod"),rs.getInt("time_cod"),rs.getString("nome"),rs.getInt("idade"));
+					rs.close();
+			        conn.close();
+			        return jogador;
+				}
+			rs.close();
+		    conn.close();
+		    return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -60,9 +79,9 @@ public class JogadorImpl implements JogadorDAO {
 			String insertTableSQL = "INSERT INTO jogador VALUES (?,?,?,?)";
 				preparedStatement = conn.prepareStatement(insertTableSQL);
 				preparedStatement.setInt(1, jogador.getCod());
-				preparedStatement.setString(2, jogador.getNome());
-				preparedStatement.setInt(3, jogador.getIdade());
-				preparedStatement.setInt(4, jogador.getTime_cod());
+				preparedStatement.setInt(2, jogador.getTime_cod());
+				preparedStatement.setString(3, jogador.getNome());
+				preparedStatement.setInt(4, jogador.getIdade());
 				int resultado = preparedStatement.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -81,6 +100,62 @@ public class JogadorImpl implements JogadorDAO {
 	public void atualizarJogador(Jogador jogador) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Jogador verJogadorDeTime(int codigoTime, int codigoJogador) {
+		PreparedStatement preparedStatement;
+		Statement stm;
+		Connection conn;
+		try {
+			conn = ProvedorConexao.getConnection();
+			String selectTableSQL = "SELECT * FROM jogador WHERE (Time_cod=" + codigoTime + " AND cod=" + codigoJogador + ")";
+				preparedStatement = conn.prepareStatement(selectTableSQL);
+				ResultSet rs = preparedStatement.executeQuery();
+				if(rs != null && rs.next()) {
+					Jogador jogador = new Jogador(rs.getInt("cod"),rs.getInt("time_cod"),rs.getString("nome"),rs.getInt("idade"));
+					rs.close();
+			        conn.close();
+			        return jogador;
+				}
+			rs.close();
+		    conn.close();
+		    return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Jogador> listarJogadoresPorIdade(int idade) {
+		List<Jogador> jogadores = new ArrayList<Jogador>();
+		PreparedStatement preparedStatement;
+		Statement stm;
+		Connection conn;
+		try {
+			conn = ProvedorConexao.getConnection();
+			String selectTableSQL = "SELECT * FROM jogador WHERE idade=" + idade;
+				preparedStatement = conn.prepareStatement(selectTableSQL);
+				ResultSet rs = preparedStatement.executeQuery();
+				while (rs.next()) { // ENQUANTO EXISTIR O PROXIMO
+		             // Criando objeto
+		             Jogador jogador = new Jogador();
+		             jogador.setCod(rs.getInt("cod"));
+		             jogador.setTime_cod(rs.getInt("time_cod"));
+		             jogador.setNome(rs.getString("nome"));
+		             jogador.setIdade(rs.getInt("idade"));             
+		             // Adiciona o objeto a lista
+		             jogadores.add(jogador);
+		         }
+		         rs.close();
+		         conn.close(); // FECHANDO A INSTANCIA DO BANCO
+		         return jogadores;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

@@ -45,4 +45,8 @@ public class Jogo {
 	public void setResultado(String resultado) {
 		this.resultado = resultado;
 	}
+	
+	public String toString() {
+		return "|     " + getCod() + "    |      " + getTimea_cod() + "     |      " + getTimeb_cod() + "     |    " + getResultado() + "    |";
+	}
 }

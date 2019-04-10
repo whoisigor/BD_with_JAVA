@@ -2,17 +2,44 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
+import campeonato.Jogo;
 import campeonato.Time;
 
 public class TimeImpl implements TimeDAO{
 
 	@Override
 	public List<Time> listarTodosTimes() {
-		// TODO Auto-generated method stub
+		List<Time> times = new ArrayList<Time>();
+		PreparedStatement preparedStatement;
+		Statement stm;
+		Connection conn;
+		try {
+			conn = ProvedorConexao.getConnection();
+			String selectTableSQL = "SELECT * FROM time";
+				preparedStatement = conn.prepareStatement(selectTableSQL);
+				ResultSet rs = preparedStatement.executeQuery();
+				while (rs.next()) { // ENQUANTO EXISTIR O PROXIMO
+		             // Criando objeto
+		             Time time = new Time();
+		             time.setCod(rs.getInt("cod"));
+		             time.setNome(rs.getString("nome"));
+		             time.setDatafundacao(rs.getString("data_fundacao"));           
+		             // Adiciona o objeto a lista
+		             times.add(time);
+		         }
+		         rs.close();
+		         conn.close();
+		         return times;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 

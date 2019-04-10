@@ -26,13 +26,18 @@ public class InserindoDadosCampeonato {
 		
 		int opcao = 0;
 		do {
-			System.out.println("-------MENU---------");
-			System.out.println("0 - Sair");
-			System.out.println("1 - Inserir Time");
-			System.out.println("2 - Inserir Jogador");		
-			System.out.println("3 - Inserir Jogo");
-			System.out.println("4 - Listar Jogos");
-			System.out.println("5 - Listar Jogadores");
+			System.out.println("\n|------ MENU DE OPCOES ------|\n"
+					+ "| -- |-----------------------|\n"
+					+ "| OP |    Descrição da OP    |");
+			System.out.println("| 0  | Sair");
+			System.out.println("| 1  | Adicionar Time");
+			System.out.println("| 2  | Adicionar Jogador");		
+			System.out.println("| 3  | Registrar Jogo");
+			System.out.println("| 4  | Listar Jogadores");
+			System.out.println("| 5  | Listar Times");
+			System.out.println("| 6  | Selecionar Jogadores");
+			System.out.println("| 7  | Selecionar Time");
+			System.out.println("| 8  | Ver Resultado Jogo");
 			opcao = sc.nextInt();
 			switch (opcao) {
 			case 1:
@@ -41,9 +46,9 @@ public class InserindoDadosCampeonato {
 				dados = new Scanner(System.in);
 				System.out.println("Digite o nome do time");
 				String nomeTime = dados.nextLine();
-				System.out.println("Digite data funda��o do time");
+				System.out.println("Digite data fundação do time");
 				String datafundacao = dados.nextLine();
-				Time t = new Time(cod,nomeTime, datafundacao);
+				Time t = new Time(cod, nomeTime, datafundacao);
 				timedao.salvarTime(t);
 				break;
 			case 2:
@@ -76,25 +81,86 @@ public class InserindoDadosCampeonato {
 				jogodao.salvarJogo(j);
 				break;
 			case 4:
-				List<Jogo> jogos = jogodao.listarTodosJogos();
-				System.out.println("----- LISTA DE JOGOS -----");
-				for(int i = 0; i < jogos.size(); i++) {
-					System.out.println("Cod Jogo:" + jogos.get(i).getCod());
-					System.out.println("Cod Time A:" + jogos.get(i).getTimea_cod());
-					System.out.println("Cod Time B:" + jogos.get(i).getTimeb_cod());
-					System.out.println("Resultado:" + jogos.get(i).getResultado() + "\n------------------");
+				List<Jogador> jogadores = jogadordao.listarTodosJogadores();
+				System.out.println("| Cod Jogador | Cod Time | Idade    |       Nome      |\n" + 
+						"|-------------|----------|----------|-----------------|");
+				for(int i = 0; i < jogadores.size(); i++) {
+					System.out.println(jogadores.get(i).toString());
 				}
 				break;
 			case 5:
-				List<Jogador> jogadores = jogadordao.listarTodosJogadores();
-				System.out.println("----- LISTA DE JOGADORES -----");
-				for(int i = 0; i < jogadores.size(); i++) {
-					System.out.println("Cod jogador:"  + jogadores.get(i).getCod());
-					System.out.println("Nome: " + jogadores.get(i).getNome());
-					System.out.println("Cod Time Atual: " + jogadores.get(i).getTime_cod());
-					System.out.println("Idade: " + jogadores.get(i).getIdade() + "\n------------------");
+				List<Time> times = timedao.listarTodosTimes();
+				System.out.println("| Cod Time |   Fundacao   | Nome Time       |\n" + 
+						"|----------|--------------|-----------------|");
+				for(int i = 0; i < times.size(); i++) 
+					System.out.println(times.get(i).toString());
+				break;
+			case 6:
+				System.out.println("Olá, digite uma opcao para selecao\n"
+						+ "1. Verifica se um jogador está em um time Especifico\n"
+						+ "2. Selecionar jogadores com idade X\n"
+						+ "3. Selecionar jogador por código\n"
+						+ "4. Selecionar todos os jogadores");
+				int codigoTime, idadeJogador, codigoJogador, opQuery = sc.nextInt();
+				if(opQuery == 1) {
+					System.out.println("Digite o código do Jogador");
+					codigoJogador = sc.nextInt();
+					System.out.println("Digite o código do Time");
+					codigoTime = sc.nextInt();
+					Jogador novo = jogadordao.verJogadorDeTime(codigoTime,codigoJogador);
+					if(novo.equals(null)) 
+						System.out.println("Este jogador não está neste time");
+					else
+						System.out.println("Seu jogador está no time\n"
+								+ "| Cod Jogador | Cod Time | Idade    |       Nome      |\n" + 
+								"|-------------|----------|----------|-----------------|");
+						System.out.println(novo.toString());
+				}else if(opQuery == 2) {
+					System.out.println("Qual idade dos jogadores?");
+					idadeJogador = sc.nextInt();
+					jogadores = jogadordao.listarJogadoresPorIdade(idadeJogador);
+					if(!(jogadores.isEmpty())) {
+						System.out.println("Encontramos estes jogadores com esta idade\n| Cod Jogador | Cod Time | Idade    |       Nome      |\n" + 
+								"|-------------|----------|----------|-----------------|");
+						for(int i = 0; i < jogadores.size(); i++) {
+							System.out.println(jogadores.get(i).toString());
+						}
+					}else {
+						System.out.println("Não acredito que nenhum time tem um jogador com idade que você solicitou, "
+								+ "que tal tentar na próxima?");
+					}
+				}else if(opQuery == 3) {
+					System.out.println("Digite o código do jogador");
+					codigoJogador = sc.nextInt();
+					Jogador novo = jogadordao.verJogadorPorCodigo(codigoJogador);
+					if(novo.equals(null)) {
+						System.out.println("Você acredita que não existe nenhum jogador com esse código? Pois é.");
+					}else {
+						System.out.println("\nEncontramos o jogador do codigo " + codigoJogador + " algumas infos sobre ele abaixo\n"
+								+ "| Cod Jogador | Cod Time | Idade    |       Nome      |\n" +
+								"|-------------|----------|----------|-----------------|\n"
+								+ novo.toString());
+					}
+				}else if (opQuery == 4) {
+					List<Jogo> jogos = jogodao.listarTodosJogos();
+					System.out.println("| Cod Jogo | Cod Time A | Cod Time B | Resultado |\n" + 
+							"|----------|------------|------------|-----------|");
+					for(int i = 0; i < jogos.size(); i++) {
+						System.out.println(jogos.get(i).toString());
+					}
+				}else {
+					System.out.println("Essa opção ainda não tá disponível :/");
 				}
 				break;
+			case 7:
+				break;
+			case 8:
+				break;
+			default:
+				System.out.println("Ops... Parece que tu digitou algo inválido.\n"
+						+ "Vamos tentar novamente? Y/ sim ou N/ nao");
+				char tentar = sc.next().charAt(0);
+				if(tentar == 'n' || tentar == 'n') opcao = 0;
 			}
 		}while(opcao != 0);
 	}
