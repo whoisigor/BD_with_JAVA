@@ -46,6 +46,26 @@ public class JogoImpl implements JogoDAO {
 
 	@Override
 	public Jogo verJogoPorCodigo(int codigo) {
+		PreparedStatement preparedStatement;
+		Statement stm;
+		Connection conn;
+		try {
+			conn = ProvedorConexao.getConnection();
+			String selectTableSQL = "SELECT * FROM jogo WHERE cod=" + codigo;
+				preparedStatement = conn.prepareStatement(selectTableSQL);
+				ResultSet rs = preparedStatement.executeQuery();
+				if(rs != null & rs.next()) {
+					Jogo jogo = new Jogo(rs.getInt("cod"),rs.getInt("timea_cod"),rs.getInt("timeb_cod"),rs.getString("resultado"));
+					rs.close();
+			        conn.close();
+			        return jogo;
+		        }
+				rs.close();
+		        conn.close();
+				return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 

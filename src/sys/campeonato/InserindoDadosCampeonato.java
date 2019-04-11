@@ -26,18 +26,16 @@ public class InserindoDadosCampeonato {
 		
 		int opcao = 0;
 		do {
-			System.out.println("\n|------ MENU DE OPCOES ------|\n"
+			System.out.println("\n*        MENU DE OPCOES      *\n"
 					+ "| -- |-----------------------|\n"
 					+ "| OP |    Descrição da OP    |");
 			System.out.println("| 0  | Sair");
 			System.out.println("| 1  | Adicionar Time");
 			System.out.println("| 2  | Adicionar Jogador");		
 			System.out.println("| 3  | Registrar Jogo");
-			System.out.println("| 4  | Listar Jogadores");
-			System.out.println("| 5  | Listar Times");
-			System.out.println("| 6  | Selecionar Jogadores");
-			System.out.println("| 7  | Selecionar Time");
-			System.out.println("| 8  | Ver Resultado Jogo");
+			System.out.println("| 4  | Selecionar Jogadores");
+			System.out.println("| 5  | Selecionar Time");
+			System.out.println("| 6  | Ver Resultado Jogo");
 			opcao = sc.nextInt();
 			switch (opcao) {
 			case 1:
@@ -81,21 +79,6 @@ public class InserindoDadosCampeonato {
 				jogodao.salvarJogo(j);
 				break;
 			case 4:
-				List<Jogador> jogadores = jogadordao.listarTodosJogadores();
-				System.out.println("| Cod Jogador | Cod Time | Idade    |       Nome      |\n" + 
-						"|-------------|----------|----------|-----------------|");
-				for(int i = 0; i < jogadores.size(); i++) {
-					System.out.println(jogadores.get(i).toString());
-				}
-				break;
-			case 5:
-				List<Time> times = timedao.listarTodosTimes();
-				System.out.println("| Cod Time |   Fundacao   | Nome Time       |\n" + 
-						"|----------|--------------|-----------------|");
-				for(int i = 0; i < times.size(); i++) 
-					System.out.println(times.get(i).toString());
-				break;
-			case 6:
 				System.out.println("Olá, digite uma opcao para selecao\n"
 						+ "1. Verifica se um jogador está em um time Especifico\n"
 						+ "2. Selecionar jogadores com idade X\n"
@@ -118,7 +101,7 @@ public class InserindoDadosCampeonato {
 				}else if(opQuery == 2) {
 					System.out.println("Qual idade dos jogadores?");
 					idadeJogador = sc.nextInt();
-					jogadores = jogadordao.listarJogadoresPorIdade(idadeJogador);
+					List<Jogador> jogadores = jogadordao.listarJogadoresPorIdade(idadeJogador);
 					if(!(jogadores.isEmpty())) {
 						System.out.println("Encontramos estes jogadores com esta idade\n| Cod Jogador | Cod Time | Idade    |       Nome      |\n" + 
 								"|-------------|----------|----------|-----------------|");
@@ -142,19 +125,60 @@ public class InserindoDadosCampeonato {
 								+ novo.toString());
 					}
 				}else if (opQuery == 4) {
-					List<Jogo> jogos = jogodao.listarTodosJogos();
-					System.out.println("| Cod Jogo | Cod Time A | Cod Time B | Resultado |\n" + 
-							"|----------|------------|------------|-----------|");
-					for(int i = 0; i < jogos.size(); i++) {
-						System.out.println(jogos.get(i).toString());
+					List<Jogador> jogador = jogadordao.listarTodosJogadores();
+					System.out.println("| Cod Jogador | Cod Time | Idade    |       Nome      |\n" + 
+							"|-------------|----------|----------|-----------------|");
+					for(int i = 0; i < jogador.size(); i++) {
+						System.out.println(jogador.get(i).toString());
 					}
 				}else {
 					System.out.println("Essa opção ainda não tá disponível :/");
 				}
 				break;
-			case 7:
+			case 5:
+				System.out.println("Selecione uma opção de busca\n"
+						+ "1. Selecione times que vencedores\n"
+						+ "2. Selecione todos os times\n"
+						+ "3. Selecionar time por código");
+				opQuery = sc.nextInt();
+				if(opQuery == 1) {
+					List<Time> vencedores = timedao.verTimesVencedores();
+					System.out.println("Lista com times que venceram os últimos jogos");
+					for(int i = 0; i < vencedores.size(); i++) {
+						System.out.println(vencedores.get(i).toString());
+					}
+					System.out.println("Times empatados não são mostrados nesta lista.");
+				}else if(opQuery == 2) {
+					List<Time> times = timedao.listarTodosTimes();
+					System.out.println("| Cod Time  |   Fundacao   | Nome Time       |\n" + 
+							"|-----------|--------------|-----------------|");
+					for(int i = 0; i < times.size(); i++) 
+						System.out.println(times.get(i).toString());
+					break;
+				}else if (opQuery == 3) {
+					System.out.println("Digite o código do time");
+					codTime = sc.nextInt();
+					Time resultTime = timedao.verTimePorCodigo(codTime);
+					if(!resultTime.equals(null)) {
+						System.out.println("Time Encontrado\n| Cod Time  |   Fundacao   | Nome Time       |\n" + 
+								"|-----------|--------------|-----------------|\n" + 
+								resultTime.toString());
+					}else {
+						System.out.println("Este time não existe :/");
+					}
+				}else {
+					System.out.println("Essa opção ainda não tá disponível :/");
+				}
 				break;
-			case 8:
+			case 6:
+				System.out.println("Digite o código do Jogo");
+				Jogo jogo = jogodao.verJogoPorCodigo(codJogo = sc.nextInt());
+				if(!(jogo.equals(null))) {
+					System.out.println("Encontramos seu jogo no nosso B.D\nResultado do Jogo: "
+							+ jogo.getResultado());
+				}else {
+					System.out.println("Este jogo não existe");
+				}
 				break;
 			default:
 				System.out.println("Ops... Parece que tu digitou algo inválido.\n"

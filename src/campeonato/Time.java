@@ -35,7 +35,12 @@ public class Time {
 	}
 	
 	public String toString() {
-		return "|     " + getCod() + "    |   "+ getDatafundacao() + " |  " + getNome();
+		if(getCod() < 10) {
+			return "|     " + getCod() + "     |   "+ getDatafundacao() + " |  " + getNome();
+		}else {
+			return "|     " + getCod() + "    |   "+ getDatafundacao() + " |  " + getNome();
+		}
+		
 	}
 	
 	

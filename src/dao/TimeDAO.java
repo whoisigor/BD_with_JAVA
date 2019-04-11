@@ -10,4 +10,5 @@ public interface TimeDAO {
 	public void salvarTime(Time time);
 	public void deletarTime(Time time);
 	public void atualizarTime(Time time);
+	public List<Time> verTimesVencedores();
 }
