@@ -90,8 +90,18 @@ public class TimeImpl implements TimeDAO{
 
 	@Override
 	public void deletarTime(Time time) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement preparedStatement;
+		Statement stm;
+		Connection conn;
+		try {
+			conn = ProvedorConexao.getConnection();
+			String selectTableSQL = "DELETE FROM time WHERE cod=" + time.getCod();
+				preparedStatement = conn.prepareStatement(selectTableSQL);
+				preparedStatement.executeUpdate();
+			    conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

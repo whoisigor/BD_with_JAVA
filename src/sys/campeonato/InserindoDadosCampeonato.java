@@ -36,6 +36,9 @@ public class InserindoDadosCampeonato {
 			System.out.println("| 4  | Selecionar Jogadores");
 			System.out.println("| 5  | Selecionar Time");
 			System.out.println("| 6  | Ver Resultado Jogo");
+			System.out.println("| 7  | Deletar Jogador");
+			System.out.println("| 8  | Deletar Time");
+			System.out.println("| 9  | Deletar Jogo");
 			opcao = sc.nextInt();
 			switch (opcao) {
 			case 1:
@@ -126,8 +129,8 @@ public class InserindoDadosCampeonato {
 					}
 				}else if (opQuery == 4) {
 					List<Jogador> jogador = jogadordao.listarTodosJogadores();
-					System.out.println("| Cod Jogador | Cod Time | Idade    |       Nome      |\n" + 
-							"|-------------|----------|----------|-----------------|");
+					System.out.println("| Cod Jogador  | Cod Time | Idade    |       Nome      |\n" + 
+							"|--------------|----------|----------|-----------------|");
 					for(int i = 0; i < jogador.size(); i++) {
 						System.out.println(jogador.get(i).toString());
 					}
@@ -178,6 +181,54 @@ public class InserindoDadosCampeonato {
 							+ jogo.getResultado());
 				}else {
 					System.out.println("Este jogo não existe");
+				}
+				break;
+			case 7:
+				List<Jogador> jogador = jogadordao.listarTodosJogadores();
+				System.out.println("Digite o código do jogador");
+				codJogador = sc.nextInt();
+				for(int i = 0; i < jogador.size(); i++) {
+					if(jogador.get(i).getCod() == codJogador) {
+						jogadordao.deletarJogador(jogador.get(i));
+						System.out.println("Jogador deletado com sucesso.");
+						break;
+					}else {
+						if(i == (jogador.size() - 1)) {
+							System.out.println("Este código de jogador não existe.");
+						}
+					}
+				}
+				break;
+			case 8:
+				List<Time> times = timedao.listarTodosTimes();
+				System.out.println("Digite o código do Time");
+				codTime = sc.nextInt();
+				for(int i = 0; i < times.size(); i++) {
+					if(times.get(i).getCod() == codTime) {
+						timedao.deletarTime(times.get(i));
+						System.out.println("Time deletado com sucesso.");
+						break;
+					}else {
+						if(i == (times.size() - 1)) {
+							System.out.println("Este código de time não existe."); /*NÃO CONSIGO APAGAR TIME PLACIDO HELPME*/
+						}
+					}
+				}
+				break;
+			case 9:
+				List<Jogo> jogos = jogodao.listarTodosJogos();
+				System.out.println("Digite o código do Jogo");
+				codJogo = sc.nextInt();
+				for(int i = 0; i < jogos.size(); i++) {
+					if(jogos.get(i).getCod() == codJogo) {
+						jogodao.deletarJogo(jogos.get(i));
+						System.out.println("Jogo deletado com sucesso.");
+						break;
+					}else {
+						if(i == (jogos.size() - 1)) {
+							System.out.println("Este código de jogo não existe.");
+						}
+					}
 				}
 				break;
 			default:

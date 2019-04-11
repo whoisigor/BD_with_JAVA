@@ -92,8 +92,18 @@ public class JogadorImpl implements JogadorDAO {
 
 	@Override
 	public void deletarJogador(Jogador jogador) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement preparedStatement;
+		Statement stm;
+		Connection conn;
+		try {
+			conn = ProvedorConexao.getConnection();
+			String selectTableSQL = "DELETE FROM jogador WHERE cod=" + jogador.getCod();
+				preparedStatement = conn.prepareStatement(selectTableSQL);
+				preparedStatement.executeUpdate();
+			    conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

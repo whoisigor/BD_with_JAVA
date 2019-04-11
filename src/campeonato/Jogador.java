@@ -48,7 +48,12 @@ public class Jogador {
 	}
 	
 	public String toString() {
-		return "|      " + getCod() + "      |     " + getTime_cod() + "    |    " + getIdade() + "    |    " + getNome(); 
+		if(getCod() < 10) {
+			return "|      " + getCod() + "       |     " + getTime_cod() + "    |    " + getIdade() + "    |    " + getNome(); 
+		}else {
+			return "|      " + getCod() + "      |     " + getTime_cod() + "    |    " + getIdade() + "    |    " + getNome(); 
+		}
+		
 	}
 	
 	

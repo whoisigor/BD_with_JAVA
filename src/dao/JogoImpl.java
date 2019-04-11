@@ -58,10 +58,13 @@ public class JogoImpl implements JogoDAO {
 					Jogo jogo = new Jogo(rs.getInt("cod"),rs.getInt("timea_cod"),rs.getInt("timeb_cod"),rs.getString("resultado"));
 					rs.close();
 			        conn.close();
+			        System.out.println("entrar aq");
 			        return jogo;
 		        }
+				System.out.println("entrar aq 2");
 				rs.close();
 		        conn.close();
+		        System.out.println("entrar aq 3");
 				return null;
 		} catch (SQLException e) {
 			e.printStackTrace();
