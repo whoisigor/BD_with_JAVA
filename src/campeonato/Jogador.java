@@ -6,7 +6,6 @@ public class Jogador {
 	private String nome;
 	private int idade;
 	
-	
 	public Jogador() { }
 	
 	public Jogador (int cod, int time_cod, String nome, int idade) {

@@ -174,10 +174,18 @@ public class InserindoDadosCampeonato {
 				}
 				break;
 			case 6:
-				System.out.println("Digite o código do Jogo");
+				System.out.println("Digite o c�digo do Jogo");
 				Jogo jogo = jogodao.verJogoPorCodigo(codJogo = sc.nextInt());
 				if(!(jogo.equals(null))) {
-					System.out.println("Encontramos seu jogo no nosso B.D\nResultado do Jogo: "
+					Time timeA = timedao.verTimePorCodigo(jogo.getTimea_cod());
+					Time timeB = timedao.verTimePorCodigo(jogo.getTimeb_cod());
+					String placar[] = new String[2];
+					String xPlacar = jogo.getResultado();
+					placar = xPlacar.split("x");
+					System.out.println("Encontramos seu jogo no nosso B.D\n"
+							+ "\nTime A: " + timeA.getNome() + " Marcou: " + placar[0]
+							+ "\nTime B: " + timeB.getNome() + " Marcou: " + placar[1]
+							+ "\nResultado do Jogo: "
 							+ jogo.getResultado());
 				}else {
 					System.out.println("Este jogo não existe");
@@ -210,7 +218,7 @@ public class InserindoDadosCampeonato {
 						break;
 					}else {
 						if(i == (times.size() - 1)) {
-							System.out.println("Este código de time não existe."); /*NÃO CONSIGO APAGAR TIME PLACIDO HELPME*/
+							System.out.println("Este c�digo de time n�o existe"); /*NÃO CONSIGO APAGAR TIME PLACIDO HELPME*/
 						}
 					}
 				}

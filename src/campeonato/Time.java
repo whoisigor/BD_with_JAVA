@@ -5,7 +5,6 @@ public class Time {
 	private String nome;
 	private String datafundacao;
 	
-	
 	public Time() { }
 	
 	public Time(int cod, String nome, String datafundacao) {

@@ -1,0 +1,10 @@
+DELETE FROM jogador WHERE time_cod=(SELECT cod FROM Time WHERE nome='Flamengo');
+DELETE FROM jogador WHERE idade=32;
+DELETE FROM jogo WHERE timea_cod=12;
+DELETE FROM time WHERE nome='São Paulo';
+DELETE FROM jogo WHERE resultado='3x2';
+DELETE FROM jogo WHERE timeb_cod=10;
+DELETE FROM jogador WHERE cod=(SELECT cod FROM jogador WHERE nome='Igor');
+DELETE FROM jogador WHERE idade=(SELECT idade FROM jogador WHERE nome='Placido');
+DELETE FROM jogador;
+DELETE FROM time;
